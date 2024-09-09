@@ -139,10 +139,10 @@ db.posts.insertMany([
 ( To show databases. )
 
 **NOTE:**
-You won't see a database listed in the output of the show dbs or show databases command until that
+You won't see a database listed in the output of the **`show dbs`** or **`show databases`** command until that
 database contains at least one 'collection' with data in it.
 
-**`Db;`**
+**`db;`**
 ( To show current database. )
 
 **`show collections;`**
@@ -151,11 +151,11 @@ database contains at least one 'collection' with data in it.
 **`db.collectionName.find();`** OR
 **`db.collectionName.find().pretty();`**
 ( To retrieve all the documents data from a collection. )
-Eg: **`db.posts.find()`** OR
-**`db.posts.find().pretty()`**
+Eg: **`db.posts.find();`** OR
+**`db.posts.find().pretty();`**
 
 **`db.collectionName.findOne();`**
-( To retrieve only one documents data from a collection whichever comes first it will retrieve it. )
+( To retrieve only one document data from a collection whichever comes first it will retrieve it. )
 
 **`db.collectionName.find().limit(number of documents you want to retrieve);`**
 ( To retrieve a specified number of documents data from a collection. )
@@ -324,6 +324,13 @@ db.posts.update({ title: 'Post One' },
 
 ( To Add Index )
 **`db.posts.createIndex({ title: 'text' })`**
+
+## Note
+
+commands like:
+insert(), update() are deprecated.
+So for insert() use insertOne() or insertMany() And
+for update() use updateOne() or updateMany()
 
 ## DELETE DATABASE:
 
