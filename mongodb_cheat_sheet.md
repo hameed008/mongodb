@@ -2,32 +2,34 @@
 
 [ Reference - Thapa Technical and tech gun ]
 
-`Write monogosh on CMD Terminal.`
+**`Write monogosh on CMD Terminal.`**
 ( To Start MongoDB server )
 
-`quit or Ctrl + D or .exit or Ctrl + C (two times )`
+**`quit or Ctrl + D or .exit or Ctrl + C (two times )`**
 ( To come out of mongosh shell. )
 
-`Right click`
+**`Right click`**
 ( To paste data on mongosh shell. )
 
-`Ctrl + C`
+**`Ctrl + C`**
 ( To copy data from mongosh shell. )
 
-## CREATE / USE DATABASE:
+## CREATE / SWITCH / USE DATABASE:
 
-`use databaseName;`
+**`use databaseName;`**
 ( it will create a database and switch to it, if there is no database present of that name. )
 
 **NOTE:**
-
-```
-use databaseName;
+**`use databaseName;`**
 ( this is used to create a database as well as to switch to an existing database. )
 
-db.createCollection(collectionName);
+**`db.createCollection(collectionName);`**
 ( To create a collection )
+Eg: **`db.createCollection('posts');`**
 
+( To Create a collection with Validation, in the above database 'teacher' is a collection. )
+
+```
 db.createCollection("teacher", {
   validator: {
     $jsonSchema: {
@@ -48,145 +50,20 @@ db.createCollection("teacher", {
 });
 ```
 
-( To Create a collection with Validation, in the above database 'teacher' is a collection. )
-
 ## INSERT INTO DATABASE:
 
+( To insert one row / document )
+
+Method 1:
+
 ```
-db.collectionName.insertOne(
+db.collectionName.insert(
 {field1: value1,
  field2: value2,
  ....
 });
-( To insert one document )
 
-db.collectionName.insertMany([
-{field1: value1,field2: value2,...},
-{field1: value1,field2: value2,...}
-//...
-]);
-
-```
-
-( To insert multiple documents. )
-
-## READ / RETRIEVE / SHOW DATABASE:
-
-`show dbs;` OR
-`show databases;`
-( To show databases. )
-
-NOTE:
-You won't see a database listed in the output of the show dbs or show databases command until that
-database contains at least one 'collection' with data in it.
-
-`Db;`
-( To show current database. )
-
-`show collections;`
-( To show collections )
-
-`db.collectionName.find();` OR
-`db.collectionName.find().pretty();`
-( To retrieve all the documents data from a collection. )
-
-`db.collectionName.findOne();`
-( To retrieve only one documents data from a collection whichever comes first it will retrieve it. )
-
-`db.collectionName.find().limit(number of documents you want to retrieve);`
-( To retrieve a specified number of documents data from a collection. )
-Eg: db.collectionName.find().limit(2);
-( it will return only the first two documents data from the collection. )
-
-`db.collectionName.find({name: "hameed"})`
-( To retrieve a specific documents data based on certain condition of the field from a collection. )
-Eg: db.collectionName.find({age: 27});
-( it will retrieve all the documents data whose age is 27. )
-
-`db.getCollectionInfos({name:"collectionName"});`
-( To Check the Validation information of a Collection. )
-
-If you want to sort records by the creation date or another field and only show the oldest ones, you can use sort() and limit().
-`db.collectionName.find().sort({ createdAt: 1 }).limit(10);`
-This query retrieves the 10 oldest records by sorting in ascending order of createdAt.
-
-In MongoDB, when you use the sort() method, the number 1 and -1 indicate the order in which you want to sort the documents:
-
-'1': Sorts in ascending order (smallest to largest). For a date, this means from the oldest to the newest.
-'-1': Sorts in descending order (largest to smallest). For a date, this means from the newest to the oldest.
-
-## UPDATE / MODIFY DATABASE:
-
-`db.collectionName.updateOne({name:"hameed"}, {$set:{name:"Faizan", age:30}});`
-( To update a single data or document of a collection based on certain conditions, here first parameter filter the data and second parameter replace the data. )
-
-`db.collectionName.updateMany({age:30}, {$set:{name:"Rohit", age:28}});`
-( To update multiple data or document of a collection based on certain conditions, here first parameter filter the data and second parameter replace the data. )
-
-## DELETE DATABASE:
-
-`db.dropDatabase();`
-( To delete a database. )
-
-`db.collectionName.drop();`
-( To delete a collection. )
-
-`db.collectionName.deleteOne({age:30});`
-( To delete one data or document from a collection based on certain conditions. )
-
-`db.collectionName.deleteMany({age:30});`
-( To delete multiple data or document of a collection based on certain conditions. )
-
-## AUTHENTIATION / AUTHORIZATION / ROLES IN DATABASE:
-
-`db.createUser({user:"hameed", pwd:"123456", roles:[{role:"read", db:"school"}]});`
-( To create a user and grant permission to access the database )
-
-`show users;`
-( To see users in MongoDB database. )
-
-`show roles;`
-( To see the roles of every user in a database. )
-
-## Show All Databases
-
-```
-show dbs
-```
-
-## Show Current Database
-
-```
-db
-```
-
-## Create Or Switch Database
-
-```
-use databaseName
-```
-
-## Drop
-
-```
-db.dropDatabase()
-```
-
-## Create Collection
-
-```
-db.createCollection('posts')
-```
-
-## Show Collections
-
-```
-show collections
-```
-
-## Insert Row
-
-```
+Example:
 db.posts.insert({
   title: 'Post One',
   body: 'Body of post one',
@@ -197,12 +74,42 @@ db.posts.insert({
     status: 'author'
   },
   date: Date()
-})
+});
 ```
 
-## Insert Multiple Rows
+Method 2:
 
 ```
+db.collectionName.insertOne(
+{field1: value1,
+ field2: value2,
+ ....
+});
+
+Example:
+db.posts.insertOne({
+  title: 'Post One',
+  body: 'Body of post one',
+  category: 'News',
+  tags: ['news', 'events'],
+  user: {
+    name: 'John Doe',
+    status: 'author'
+  },
+  date: Date()
+});
+```
+
+( To insert multiple rows / documents. )
+
+```
+db.collectionName.insertMany([
+{field1: value1,field2: value2,...},
+{field2: value2,field2: value2,...}
+//...
+]);
+
+Example:
 db.posts.insertMany([
   {
     title: 'Post Two',
@@ -222,70 +129,45 @@ db.posts.insertMany([
     category: 'Entertainment',
     date: Date()
   }
-])
+]);
 ```
 
-## Get All Rows
+## READ / RETRIEVE / SHOW ALL DATABASE:
 
-```
-db.posts.find()
-```
+**`show dbs;`** OR
+**`show databases;`**
+( To show databases. )
 
-## Get All Rows Formatted
+**NOTE:**
+You won't see a database listed in the output of the show dbs or show databases command until that
+database contains at least one 'collection' with data in it.
 
-```
-db.posts.find().pretty()
-```
+**`Db;`**
+( To show current database. )
 
-## Find Rows
+**`show collections;`**
+( To show collections )
 
-```
-db.posts.find({ category: 'News' })
-```
+**`db.collectionName.find();`** OR
+**`db.collectionName.find().pretty();`**
+( To retrieve all the documents data from a collection. )
+Eg: **`db.posts.find()`** OR
+**`db.posts.find().pretty()`**
 
-## Sort Rows
+**`db.collectionName.findOne();`**
+( To retrieve only one documents data from a collection whichever comes first it will retrieve it. )
 
-```
-# asc
-db.posts.find().sort({ title: 1 }).pretty()
-# desc
-db.posts.find().sort({ title: -1 }).pretty()
-```
+**`db.collectionName.find().limit(number of documents you want to retrieve);`**
+( To retrieve a specified number of documents data from a collection. )
+Eg: **`db.collectionName.find().limit(2);`**
+( it will return only the first two documents data from the collection. )
 
-## Count Rows
+**`db.collectionName.find({name: "hameed"})`**
+( To retrieve a specific documents data based on certain condition of the field from a collection. )
+Eg: **`db.collectionName.find({age: 27});`**
+( it will retrieve all the documents data whose age is 27. )
 
-```
-db.posts.find().count()
-db.posts.find({ category: 'news' }).count()
-```
-
-## Limit Rows
-
-```
-db.posts.find().limit(2).pretty()
-```
-
-## Chaining
-
-```
-db.posts.find().limit(2).sort({ title: 1 }).pretty()
-```
-
-## Foreach
-
-```
-db.posts.find().forEach(function(doc) {
-  print("Blog Post: " + doc.title)
-})
-```
-
-## Find One Row
-
-```
-db.posts.findOne({ category: 'News' })
-```
-
-## Find Specific Fields
+( To Find Specific Fields )
 
 ```
 db.posts.find({ title: 'Post One' }, {
@@ -294,7 +176,77 @@ db.posts.find({ title: 'Post One' }, {
 })
 ```
 
-## Update Row
+**`db.getCollectionInfos({name:"collectionName"});`**
+( To Check the Validation information of a Collection. )
+
+**`db.posts.find().sort({ title: 1 }).pretty();`**
+( To sort row or documents in ascending order )
+
+**`db.posts.find().sort({ title: -1 }).pretty();`**
+( To sort row or documents in descending order )
+
+If you want to sort records by the creation date or another field and only show the oldest ones, you can use sort() and limit().
+**`db.collectionName.find().sort({ createdAt: 1 }).limit(10);`**
+This query retrieves the 10 oldest records by sorting in ascending order of createdAt.
+
+In MongoDB, when you use the sort() method, the number 1 and -1 indicate the order in which you want to sort the documents:
+
+'1': Sorts in ascending order (smallest to largest). For a date, this means from the oldest to the newest.
+'-1': Sorts in descending order (largest to smallest). For a date, this means from the newest to the oldest.
+
+**`db.posts.find().limit(2).pretty();`**
+( To limit rows or documents )
+
+**`db.posts.find().limit(2).sort({ title: 1 }).pretty();`**
+( To limit and sort at the same time, also known as chaining )
+
+**`db.posts.find().count();`**
+**`db.posts.find({ category: 'news' }).count();`**
+( To count rows or documents )
+
+( Using forEach method )
+
+```
+db.posts.find().forEach(function(doc) {
+  print("Blog Post: " + doc.title)
+})
+```
+
+( To Find By Element in Array (\$elemMatch) )
+
+```
+db.posts.find({
+  comments: {
+     $elemMatch: {
+       user: 'Mary Williams'
+       }
+    }
+  }
+)
+```
+
+( Text Search )
+
+```
+db.posts.find({
+  $text: {
+    $search: "\"Post O\""
+    }
+});
+```
+
+( Greater & Less Than )
+
+```
+db.posts.find({ views: { $gt: 2 } })
+db.posts.find({ views: { $gte: 7 } })
+db.posts.find({ views: { $lt: 7 } })
+db.posts.find({ views: { $lte: 7 } })
+```
+
+## UPDATE / MODIFY DATABASE:
+
+( To udate row / documents)
 
 ```
 db.posts.update({ title: 'Post Two' },
@@ -308,7 +260,7 @@ db.posts.update({ title: 'Post Two' },
 })
 ```
 
-## Update Specific Field
+( To Update Specific Field )
 
 ```
 db.posts.update({ title: 'Post Two' },
@@ -320,7 +272,7 @@ db.posts.update({ title: 'Post Two' },
 })
 ```
 
-## Increment Field (\$inc)
+( To Increment Field (\$inc) )
 
 ```
 db.posts.update({ title: 'Post Two' },
@@ -331,7 +283,7 @@ db.posts.update({ title: 'Post Two' },
 })
 ```
 
-## Rename Field
+( To Rename a Field )
 
 ```
 db.posts.update({ title: 'Post Two' },
@@ -342,13 +294,13 @@ db.posts.update({ title: 'Post Two' },
 })
 ```
 
-## Delete Row
+**`db.collectionName.updateOne({name:"hameed"}, {$set:{name:"Faizan", age:30}});`**
+( To update a single data or document of a collection based on certain conditions, here first parameter filter the data and second parameter replace the data. )
 
-```
-db.posts.remove({ title: 'Post Four' })
-```
+**`db.collectionName.updateMany({age:30}, {$set:{name:"Rohit", age:28}});`**
+( To update multiple data or document of a collection based on certain conditions, here first parameter filter the data and second parameter replace the data. )
 
-## Sub-Documents
+( Sub-Documents )
 
 ```
 db.posts.update({ title: 'Post One' },
@@ -370,40 +322,33 @@ db.posts.update({ title: 'Post One' },
 })
 ```
 
-## Find By Element in Array (\$elemMatch)
+( To Add Index )
+**`db.posts.createIndex({ title: 'text' })`**
 
-```
-db.posts.find({
-  comments: {
-     $elemMatch: {
-       user: 'Mary Williams'
-       }
-    }
-  }
-)
-```
+## DELETE DATABASE:
 
-## Add Index
+**`db.posts.remove({ title: 'Post Four' });`**
+( To delete a row or document )
 
-```
-db.posts.createIndex({ title: 'text' })
-```
+**`db.dropDatabase();`**
+( To delete a database. )
 
-## Text Search
+**`db.collectionName.drop();`**
+( To delete a collection. )
 
-```
-db.posts.find({
-  $text: {
-    $search: "\"Post O\""
-    }
-})
-```
+**`db.collectionName.deleteOne({age:30});`**
+( To delete one data or document from a collection based on certain conditions. )
 
-## Greater & Less Than
+**`db.collectionName.deleteMany({age:30});`**
+( To delete multiple data or document of a collection based on certain conditions. )
 
-```
-db.posts.find({ views: { $gt: 2 } })
-db.posts.find({ views: { $gte: 7 } })
-db.posts.find({ views: { $lt: 7 } })
-db.posts.find({ views: { $lte: 7 } })
-```
+## AUTHENTIATION / AUTHORIZATION / ROLES IN DATABASE:
+
+**`db.createUser({user:"hameed", pwd:"123456", roles:[{role:"read", db:"school"}]});`**
+( To create a user and grant permission to access the database )
+
+**`show users;`**
+( To see users in MongoDB database. )
+
+**`show roles;`**
+( To see the roles of every user in a database. )
