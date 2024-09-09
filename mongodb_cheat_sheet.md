@@ -27,7 +27,7 @@ Write **`monogosh`** on CMD Terminal.
 ( To create a collection )
 Eg: **`db.createCollection('posts');`**
 
-( To Create a collection with Validation, in the above database 'teacher' is a collection. )
+( To Create a collection with Validation, in the below database 'teacher' is a collection. )
 
 ```
 db.createCollection("teacher", {
