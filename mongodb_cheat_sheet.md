@@ -2,10 +2,10 @@
 
 [ Reference - Thapa Technical and tech gun ]
 
-**`Write monogosh on CMD Terminal.`**
+Write **`monogosh`** on CMD Terminal.
 ( To Start MongoDB server )
 
-**`quit or Ctrl + D or .exit or Ctrl + C (two times )`**
+**`Ctrl + D or .exit or Ctrl + C ( two times )`**
 ( To come out of mongosh shell. )
 
 **`Right click`**
