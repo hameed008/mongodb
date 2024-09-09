@@ -327,10 +327,9 @@ db.posts.update({ title: 'Post One' },
 
 ## Note
 
-commands like:
-insert(), update() are deprecated.
-So for insert() use insertOne() or insertMany() And
-for update() use updateOne() or updateMany()
+commands like:  
+`insert()`, `update()` are deprecated.  
+So for `insert()` use `insertOne()` or `insertMany()` and for `update()` use `updateOne()` or `updateMany()`
 
 ## DELETE DATABASE:
 
